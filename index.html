@@ -1,359 +1,494 @@
-import { useState } from "react";
+{
+  "name": "cession-btp",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": { "dev": "vite", "build": "tsc && vite build", "preview": "vite preview" },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.462.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "tailwindcss": "^3.4.1",
+    "postcss": "^8.4.35",
+    "autoprefixer": "^10.4.18"
+  }
+}
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import path from 'node:path'
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: { alias: { '@': path.resolve(__dirname, 'src') } },
+})
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+import type { Config } from "tailwindcss";
+
+export default {
+  darkMode: ["class"],
+  content: ["./index.html", "./src/**/*.{ts,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        card: "hsl(var(--card))",
+        "card-foreground": "hsl(var(--card-foreground))",
+        primary: "hsl(var(--primary))",
+        "primary-foreground": "hsl(var(--primary-foreground))",
+        secondary: "hsl(var(--secondary))",
+        "secondary-foreground": "hsl(var(--secondary-foreground))",
+        accent: "hsl(var(--accent))",
+        "accent-foreground": "hsl(var(--accent-foreground))",
+        muted: "hsl(var(--muted))",
+        "muted-foreground": "hsl(var(--muted-foreground))",
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        "brand-orange": "hsl(var(--brand-orange))",
+        "brand-warning": "hsl(var(--brand-warning))",
+      },
+      backgroundImage: {
+        "hero-gradient": "var(--hero-gradient)",
+        "card-gradient": "var(--card-gradient)",
+        "pricing-gradient": "var(--pricing-gradient)",
+        "surface-gradient": "var(--surface-gradient)",
+      },
+      boxShadow: {
+        premium: "var(--shadow-premium)",
+        card: "var(--shadow-card)",
+        hero: "var(--shadow-hero)",
+        pricing: "var(--shadow-pricing)",
+      },
+      borderRadius: { lg: "var(--radius)", xl: "calc(var(--radius) + 4px)" },
+      animation: {
+        "fade-in": "fade-in 0.3s ease-out",
+        "scale-in": "scale-in 0.2s ease-out",
+        float: "float 6s ease-in-out infinite",
+        "pulse-glow": "pulse 2s ease-in-out infinite",
+      },
+      keyframes: {
+        "fade-in": { "0%": { opacity: "0", transform: "translateY(10px)" }, "100%": { opacity: "1", transform: "translateY(0)" } },
+        "scale-in": { "0%": { opacity: "0", transform: "scale(0.98)" }, "100%": { opacity: "1", transform: "scale(1)" } },
+        float: { "0%,100%": { transform: "translateY(0)" }, "50%": { transform: "translateY(-8px)" } },
+        pulse: { "0%,100%": { opacity: "1" }, "50%": { opacity: ".6" } },
+      },
+    },
+  },
+  plugins: [],
+} satisfies Config;
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CessionBTP - Plateforme n°1 de transmission d'entreprises BTP</title>
+    <meta name="description" content="Plateforme n°1 en France de transmission d'entreprises BTP. Repreneurs qualifiés, visibilité sectorielle et accompagnement expert." />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App";
+import "./index.css";
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import CessionBTP from "./pages/CessionBTP";
+import NotFound from "./pages/NotFound";
+
+const App = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<CessionBTP />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  </BrowserRouter>
+);
+
+export default App;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CessionBTP Design System */
+@layer base {
+  :root {
+    --brand-blue: 221 83% 53%;
+    --brand-purple: 259 84% 61%;
+    --brand-orange: 25 95% 53%;
+    --brand-dark: 221 39% 11%;
+    --brand-warning: 45 100% 51%;
+    --background: 0 0% 100%;
+    --foreground: 221 39% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 221 39% 11%;
+    --primary: 259 84% 61%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 221 39% 11%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 215 13% 65%;
+    --accent: 221 83% 53%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 259 84% 61%;
+    --premium-gradient: linear-gradient(135deg, hsl(259 84% 61%), hsl(221 83% 53%));
+    --hero-gradient: linear-gradient(135deg, hsl(259 84% 61%) 0%, hsl(221 83% 53%) 100%);
+    --surface-gradient: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(220 14% 98%) 100%);
+    --card-gradient: linear-gradient(135deg, hsl(259 84% 61%) 0%, hsl(221 83% 53%) 100%);
+    --pricing-gradient: linear-gradient(135deg, hsl(259 84% 61% / 0.1), hsl(221 83% 53% / 0.1));
+    --shadow-premium: 0 20px 40px -10px hsl(259 84% 61% / 0.15);
+    --shadow-card: 0 4px 6px -1px hsl(221 39% 11% / 0.08);
+    --shadow-hero: 0 25px 50px -12px hsl(259 84% 61% / 0.25);
+    --shadow-pricing: 0 10px 30px -5px hsl(259 84% 61% / 0.1);
+    --radius: 0.75rem;
+  }
+  .dark {
+    --background: 221 39% 11%;
+    --foreground: 0 0% 98%;
+    --card: 221 39% 11%;
+    --card-foreground: 0 0% 98%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 221 39% 15%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 221 39% 15%;
+    --muted-foreground: 215 13% 65%;
+    --accent: 25 95% 53%;
+    --accent-foreground: 0 0% 100%;
+    --border: 221 39% 15%;
+    --input: 221 39% 15%;
+    --ring: 221 83% 53%;
+  }
+}
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground; }
+}
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+export function cn(...inputs: ClassValue[]) { return twMerge(clsx(inputs)); }
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:opacity-50 disabled:pointer-events-none",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        outline: "border border-input bg-background hover:bg-accent/10 hover:text-foreground",
+        ghost: "hover:bg-accent/10",
+        link: "text-primary underline-offset-4 hover:underline",
+      },
+      size: { default: "h-10 px-4 py-2", sm: "h-9 px-3", lg: "h-11 px-8", icon: "h-10 w-10" },
+    },
+    defaultVariants: { variant: "default", size: "default" },
+  }
+);
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, ...props }, ref) => (
+    <button ref={ref} className={cn(buttonVariants({ variant, size }), className)} {...props} />
+  )
+);
+Button.displayName = "Button";
+
+export { Button, buttonVariants };
+import * as React from "react";
+import { cn } from "@/lib/utils";
+
+const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
+  ({ className, ...props }, ref) => (
+    <input
+      ref={ref}
+      className={cn(
+        "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        className
+      )}
+      {...props}
+    />
+  )
+);
+Input.displayName = "Input";
+export { Input };
+import * as React from "react";
+import { cn } from "@/lib/utils";
+
+const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div ref={ref} className={cn("rounded-xl border bg-card text-card-foreground shadow", className)} {...props} />
+  )
+);
+Card.displayName = "Card";
+
+const CardHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn("flex flex-col space-y-1.5 p-6", className)} {...props} />
+);
+const CardTitle = ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
+  <h3 className={cn("text-2xl font-semibold leading-none tracking-tight", className)} {...props} />
+);
+const CardDescription = ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
+  <p className={cn("text-sm text-muted-foreground", className)} {...props} />
+);
+const CardContent = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn("p-6 pt-0", className)} {...props} />
+);
+
+export { Card, CardHeader, CardTitle, CardDescription, CardContent };
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
+
+const badgeVariants = cva(
+  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors",
+  {
+    variants: {
+      variant: {
+        default: "border-transparent bg-primary text-primary-foreground hover:bg-primary/90",
+        secondary: "border-transparent bg-secondary text-secondary-foreground",
+        outline: "text-foreground",
+      },
+    },
+    defaultVariants: { variant: "default" },
+  }
+);
+
+export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {}
+
+function Badge({ className, variant, ...props }: BadgeProps) {
+  return <div className={cn(badgeVariants({ variant }), className)} {...props} />;
+}
+export { Badge, badgeVariants };
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { MapPin, Calendar } from "lucide-react";
 
-import { Pricing } from "@/components/sections/Pricing";
-import { FeaturedListings } from "@/components/sections/FeaturedListings";
+const listings = [
+  {
+    id: 1,
+    title: "Société d'Isolation Thermique",
+    location: "Lyon, Auvergne-Rhône-Alpes",
+    certification: "CERTIFIÉ RGE",
+    certificationColor: "bg-brand-warning",
+    founded: "2020",
+    ca2023: "€1.2M",
+    employees: "8 salariés",
+    specialty: "ITE & ITI",
+    description:
+      "Entreprise RGE spécialisée en isolation thermique intérieure et extérieure. Installation de pompes à chaleur. Carnet de commandes plein sur 6 mois.",
+    price: "Sur demande",
+    color: "bg-card-gradient",
+  },
+  {
+    id: 2,
+    title: "Entreprise Chauffage & Climatisation",
+    location: "Toulouse, Occitanie",
+    certification: "RGE QUALIPAC",
+    certificationColor: "bg-brand-warning",
+    founded: "2008",
+    ca2023: "€320K",
+    employees: "3 salariés",
+    specialty: "Dette: 0€",
+    description:
+      "16 ans d'existence, entreprise saine sans dette. Spécialisée pompes à chaleur et climatisation réversible. Contrats de maintenance récurrents.",
+    price: "€280 000",
+    color: "bg-card-gradient",
+  },
+  {
+    id: 3,
+    title: "Entreprise Générale du Bâtiment",
+    location: "Nice, PACA",
+    certification: "QUALIBAT",
+    certificationColor: "bg-brand-warning",
+    founded: "2005",
+    ca2023: "€2.8M",
+    employees: "22 salariés",
+    specialty: "Banque Pop.",
+    description:
+      "Entreprise générale tous corps d'état. Marchés publics 60%, privés 40%. Certifications Qualibat 2111 et 4112. Matériel récent, parc 15 véhicules.",
+    price: "€1 850 000",
+    color: "bg-card-gradient",
+  },
+];
 
-const CessionBTP = () => {
-  console.log("CessionBTP component is rendering...");
-  const [email, setEmail] = useState("");
-  const [userType, setUserType] = useState("");
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [selectedMetier, setSelectedMetier] = useState("");
-  const [selectedRegion, setSelectedRegion] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email && userType) {
-      console.log("Inscription:", email, userType);
-      setShowSuccess(true);
-      setEmail("");
-      setUserType("");
-      setTimeout(() => setShowSuccess(false), 5000);
-    }
-  };
-
-  const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
-
+export const FeaturedListings = () => {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="bg-card border-b border-border shadow-card fixed w-full top-0 z-50 backdrop-blur-sm">
-        <nav className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="text-3xl md:text-4xl font-black uppercase">
-            <span 
-              className="text-primary-foreground bg-gradient-to-br from-accent to-primary px-4 py-1 inline-block rounded-lg shadow-premium transition-transform hover:scale-105" 
-              style={{ transform: 'skewX(-8deg)' }}
-            >
-              CESSION
-            </span>
-            <span 
-              className="text-primary-foreground bg-gradient-to-br from-brand-orange to-brand-warning px-4 py-1 ml-1 inline-block rounded-lg shadow-premium transition-transform hover:scale-105" 
-              style={{ transform: 'skewX(-8deg)' }}
-            >
-              BTP
-            </span>
-          </div>
-          <div className="hidden md:flex items-center gap-6">
-            <a href="#annonces" className="text-foreground hover:text-primary font-medium transition-all duration-300 hover:scale-105 story-link">Annonces</a>
-            <a href="#services" className="text-foreground hover:text-primary font-medium transition-all duration-300 hover:scale-105 story-link">Services</a>
-            <a href="#tarifs" className="text-foreground hover:text-primary font-medium transition-all duration-300 hover:scale-105 story-link">Tarifs</a>
-            <a href="#contact" className="text-foreground hover:text-primary font-medium transition-all duration-300 hover:scale-105 story-link">Contact</a>
-            <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground rounded-full px-6 transition-all duration-300 hover-scale">
-              Connexion
-            </Button>
-            <Button className="bg-gradient-to-r from-brand-orange to-brand-warning text-white px-6 rounded-full shadow-premium hover:shadow-hero transition-all duration-300 hover-scale">
-              Publier une annonce
-            </Button>
-          </div>
-        </nav>
-      </header>
-
-      {/* Hero Section */}
-      <section className="bg-hero-gradient text-primary-foreground pt-32 pb-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20"></div>
-        <div className="absolute top-20 left-10 w-32 h-32 bg-brand-orange/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-10 w-48 h-48 bg-brand-warning/10 rounded-full blur-3xl animate-float"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
-          <div className="animate-fade-in">
-            <h1 className="text-4xl md:text-7xl font-black mb-8 leading-tight">
-              <span className="text-primary-foreground">Plateforme n°1 en France</span><br />
-              <span className="text-brand-orange">de transmission</span><br />
-              <span className="text-primary-foreground">d'entreprises BTP</span>
-            </h1>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-12 text-xl">
-              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full">
-                <span className="text-brand-orange font-bold text-2xl">75 000</span>
-                <span>entreprises à transmettre</span>
-              </div>
-              <div className="hidden md:block w-2 h-2 bg-brand-orange rounded-full"></div>
-              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full">
-                <span className="text-brand-warning font-bold text-2xl">200 000</span>
-                <span>emplois à sauver</span>
-              </div>
-            </div>
-          </div>
-          
-          <div className="max-w-5xl mx-auto mb-16 animate-scale-in">
-            <div className="flex flex-col md:flex-row gap-4 bg-card/95 backdrop-blur-sm p-6 rounded-3xl shadow-hero border border-white/20">
-              <select
-                id="metier-select"
-                value={selectedMetier}
-                onChange={(e) => setSelectedMetier(e.target.value)}
-                className="flex-1 bg-background text-foreground border border-border rounded-xl px-4 py-4 font-medium focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 hover:border-primary/50 z-20"
-              >
-                <option value="">Type d'entreprise</option>
-                <optgroup label="Gros œuvre">
-                  <option>Maçonnerie générale</option>
-                  <option>Béton armé</option>
-                  <option>Démolition</option>
-                  <option>Terrassement</option>
-                  <option>Fondations spéciales</option>
-                  <option>Préfabrication béton</option>
-                  <option>Charpente béton</option>
-                  <option>Voirie</option>
-                  <option>Assainissement</option>
-                  <option>Canalisations</option>
-                  <option>Génie civil</option>
-                  <option>Travaux publics</option>
-                  <option>Construction métallique</option>
-                  <option>Soudure industrielle</option>
-                  <option>Montage industriel</option>
-                  <option>Chaudronnerie</option>
-                  <option>Tuyauterie industrielle</option>
-                  <option>Ouvrages d'art</option>
-                  <option>Tunnels</option>
-                  <option>Ponts</option>
-                </optgroup>
-                <optgroup label="Charpente & Structure">
-                  <option>Charpente bois</option>
-                  <option>Charpente métallique</option>
-                  <option>Ossature bois</option>
-                  <option>Construction bois</option>
-                  <option>Maison ossature bois</option>
-                  <option>Bardage bois</option>
-                  <option>Lamellé-collé</option>
-                  <option>Charpente industrielle</option>
-                  <option>Levage</option>
-                  <option>Grutage</option>
-                  <option>Manutention</option>
-                  <option>Échafaudage</option>
-                  <option>Coffrages</option>
-                  <option>Étaiement</option>
-                </optgroup>
-                <optgroup label="Couverture & Étanchéité">
-                  <option>Couverture traditionnelle</option>
-                  <option>Couverture zinc</option>
-                  <option>Couverture ardoise</option>
-                  <option>Couverture tuile</option>
-                  <option>Couverture bac acier</option>
-                  <option>Étanchéité toiture</option>
-                  <option>Étanchéité terrasse</option>
-                  <option>Membrane d'étanchéité</option>
-                  <option>Toiture végétalisée</option>
-                  <option>Réfection toiture</option>
-                  <option>Désamiantage</option>
-                  <option>Traitement charpente</option>
-                  <option>Zinguerie</option>
-                  <option>Gouttières</option>
-                  <option>Descentes EP</option>
-                </optgroup>
-                {/* ... autres optgroups ... */}
-              </select>
-
-              <select
-                value={selectedRegion}
-                onChange={(e) => setSelectedRegion(e.target.value)}
-                className="flex-1 bg-background text-foreground border border-border rounded-xl px-4 py-4 font-medium focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 hover:border-primary/50 z-20"
-              >
-                <option>Région</option>
-                <option>Île-de-France</option>
-                <option>Auvergne-Rhône-Alpes</option>
-                <option>Nouvelle-Aquitaine</option>
-                <option>Occitanie</option>
-                <option>Hauts-de-France</option>
-                <option>Provence-Alpes-Côte d'Azur</option>
-                <option>Grand Est</option>
-                <option>Pays de la Loire</option>
-                <option>Normandie</option>
-                <option>Bretagne</option>
-                <option>Bourgogne-Franche-Comté</option>
-                <option>Centre-Val de Loire</option>
-                <option>Corse</option>
-                <option>Guadeloupe</option>
-                <option>Martinique</option>
-                <option>Guyane</option>
-                <option>La Réunion</option>
-                <option>Mayotte</option>
-              </select>
-
-              <Button className="bg-gradient-to-r from-brand-orange to-brand-warning text-white px-10 py-4 rounded-xl font-bold text-lg shadow-premium hover:shadow-hero transition-all duration-300 hover-scale">
-                🔍 Rechercher
-              </Button>
-            </div>
-          </div>
-          
-          <div className="flex flex-col md:flex-row gap-6 justify-center mb-16">
-            <Button className="bg-card text-primary hover:bg-primary hover:text-primary-foreground px-10 py-5 text-xl font-bold rounded-2xl shadow-premium transition-all duration-300 hover-scale">
-              ⚡ Vendez en 3 mois
-            </Button>
-            <Button className="border-2 border-brand-orange bg-brand-orange/10 text-brand-orange hover:bg-brand-orange hover:text-white px-10 py-5 text-xl font-bold rounded-2xl backdrop-blur-sm transition-all duration-300 hover-scale">
-              🎯 Voir les entreprises disponibles
-            </Button>
-          </div>
+    <section id="annonces" className="py-20 bg-surface-gradient">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold mb-4">
+            Dernières <span className="text-primary">Annonces</span> Publiées
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Découvrez les entreprises BTP disponibles à la transmission
+          </p>
         </div>
-      </section>
 
-      {/* Stats Section */}
-      <section className="py-20 bg-surface-gradient border-t border-border">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="bg-card p-8 rounded-3xl shadow-card hover:shadow-premium transition-all duration-300 hover-scale border border-border">
-              <div className="text-5xl font-black text-primary mb-4 animate-pulse-glow">0</div>
-              <div className="text-muted-foreground font-medium">Transactions réussies ce trimestre</div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          {listings.map((listing) => (
+            <div key={listing.id} className="group relative">
+              <div className={`rounded-2xl p-6 text-white ${listing.color} shadow-pricing hover:shadow-premium transition-all duration-300 hover:-translate-y-2`}>
+                <div className="flex justify-between items-start mb-4">
+                  <Badge className={`${listing.certificationColor} text-black font-bold px-3 py-1`}>
+                    {listing.certification}
+                  </Badge>
+                  <div className="flex items-center text-white/80 text-sm">
+                    <Calendar className="w-4 h-4 mr-1" />
+                    Il y a 2h
+                  </div>
+                </div>
+
+                <h3 className="text-xl font-bold mb-3 text-white">{listing.title}</h3>
+
+                <div className="flex items-center mb-6 text-white/90">
+                  <MapPin className="w-4 h-4 mr-2 text-red-400" />
+                  <span className="text-sm">{listing.location}</span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+                  <div>
+                    <span className="text-white/70">Création</span>
+                    <div className="font-bold text-white">{listing.founded}</div>
+                  </div>
+                  <div>
+                    <span className="text-white/70">CA 2023</span>
+                    <div className="font-bold text-white">{listing.ca2023}</div>
+                  </div>
+                  <div>
+                    <span className="text-white/70">Effectif</span>
+                    <div className="font-bold text-white">{listing.employees}</div>
+                  </div>
+                  <div>
+                    <span className="text-white/70">Spécialité</span>
+                    <div className="font-bold text-white">{listing.specialty}</div>
+                  </div>
+                </div>
+
+                <p className="text-white/90 text-sm mb-6 leading-relaxed">{listing.description}</p>
+
+                <div className="flex justify-between items-center">
+                  <div><span className="text-2xl font-bold text-accent">{listing.price}</span></div>
+                  <Button className="bg-card/20 hover:bg-card/40 text-white border border-white/30 backdrop-blur-sm px-6 py-3 rounded-xl font-bold transition-all duration-300">
+                    Contacter
+                  </Button>
+                </div>
+              </div>
             </div>
-            <div className="bg-card p-8 rounded-3xl shadow-card hover:shadow-premium transition-all duration-300 hover-scale border border-border">
-              <div className="text-5xl font-black text-brand-orange mb-4 animate-pulse-glow">75k</div>
-              <div className="text-muted-foreground font-medium">Entreprises BTP en France</div>
-            </div>
-            <div className="bg-card p-8 rounded-3xl shadow-card hover:shadow-premium transition-all duration-300 hover-scale border border-border">
-              <div className="text-5xl font-black text-brand-warning mb-4 animate-pulse-glow">6%</div>
-              <div className="text-muted-foreground font-medium">Success fee seulement</div>
-            </div>
-          </div>
+          ))}
         </div>
-      </section>
 
-      {/* Annonces récentes */}
-      <FeaturedListings />
-
-      {/* Services */}
-      <section id="services" className="py-24 bg-background">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6">Nos <span className="text-gradient">services</span></h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">Accompagnement complet pour la transmission de votre entreprise BTP</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center bg-card p-8 rounded-3xl shadow-card hover:shadow-premium transition-all duration-300 hover-scale border border-border group">
-              <div className="bg-primary/10 rounded-3xl w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition-colors duration-300">
-                <span className="text-3xl">🏗️</span>
-              </div>
-              <h3 className="text-xl font-bold mb-4 text-foreground">Évaluation</h3>
-              <p className="text-muted-foreground">Estimation gratuite et précise de votre entreprise BTP</p>
-            </div>
-            <div className="text-center bg-card p-8 rounded-3xl shadow-card hover:shadow-premium transition-all duration-300 hover-scale border border-border group">
-              <div className="bg-accent/10 rounded-3xl w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:bg-accent/20 transition-colors duration-300">
-                <span className="text-3xl">📋</span>
-              </div>
-              <h3 className="text-xl font-bold mb-4 text-foreground">Accompagnement</h3>
-              <p className="text-muted-foreground">Suivi personnalisé de A à Z par nos experts</p>
-            </div>
-            <div className="text-center bg-card p-8 rounded-3xl shadow-card hover:shadow-premium transition-all duration-300 hover-scale border border-border group">
-              <div className="bg-brand-orange/10 rounded-3xl w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-orange/20 transition-colors duration-300">
-                <span className="text-3xl">🤝</span>
-              </div>
-              <h3 className="text-xl font-bold mb-4 text-foreground">Négociation</h3>
-              <p className="text-muted-foreground">Optimisation du prix et des conditions de vente</p>
-            </div>
-            <div className="text-center bg-card p-8 rounded-3xl shadow-card hover:shadow-premium transition-all duration-300 hover-scale border border-border group">
-              <div className="bg-brand-warning/10 rounded-3xl w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-warning/20 transition-colors duration-300">
-                <span className="text-3xl">📄</span>
-              </div>
-              <h3 className="text-xl font-bold mb-4 text-foreground">Juridique</h3>
-              <p className="text-muted-foreground">Sécurisation complète de la transaction</p>
-            </div>
-          </div>
+        <div className="text-center">
+          <Button className="bg-gradient-to-r from-primary to-accent text-primary-foreground px-12 py-5 text-xl font-bold rounded-2xl shadow-premium hover:shadow-hero transition-all">
+            Voir toutes les annonces
+          </Button>
         </div>
-      </section>
-
-      {/* Tarifs */}
-      <div id="tarifs">
-        <Pricing />
       </div>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">Prêt à transmettre votre entreprise ?</h2>
-          <p className="text-xl mb-8 opacity-90">Rejoignez notre plateforme nouvelle génération pour la transmission BTP</p>
-          <div className="flex flex-col md:flex-row gap-6 justify-center">
-            <Button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold">
-              Évaluer mon entreprise
-            </Button>
-            <Button className="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 text-lg font-semibold">
-              Parler à un expert
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer id="contact" className="bg-card-gradient border-t border-border py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5"></div>
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-            <div className="md:col-span-2">
-              <div className="text-3xl font-black uppercase mb-6">
-                <span className="text-foreground">CESSION</span>
-                <span className="text-primary-foreground bg-gradient-to-br from-brand-orange to-brand-warning px-3 py-1 ml-2 rounded-lg">BTP</span>
-              </div>
-              <p className="text-muted-foreground mb-6 text-lg">La première plateforme française dédiée à la transmission d'entreprises BTP. Plus de 0 transactions réussies.</p>
-              <div className="space-y-3">
-                <div className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-                  <span className="text-brand-orange">📞</span>
-                  <span>01 23 45 67 89</span>
-                </div>
-                <div className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-                  <span className="text-brand-orange">📧</span>
-                  <span>contact@cessionbtp.fr</span>
-                </div>
-                <div className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-                  <span className="text-brand-orange">📍</span>
-                  <span>Paris, France</span>
-                </div>
-              </div>
-            </div>
-            
-            <div>
-              <h3 className="text-xl font-bold mb-6 text-foreground">Services</h3>
-              <ul className="space-y-3 text-muted-foreground">
-                <li className="hover:text-primary transition-colors cursor-pointer story-link">🏗️ Évaluation d'entreprise</li>
-                <li className="hover:text-primary transition-colors cursor-pointer story-link">📋 Accompagnement cession</li>
-                <li className="hover:text-primary transition-colors cursor-pointer story-link">🎯 Recherche d'acquéreurs</li>
-                <li className="hover:text-primary transition-colors cursor-pointer story-link">📄 Conseil juridique</li>
-                <li className="hover:text-primary transition-colors cursor-pointer story-link">💰 Financement</li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-xl font-bold mb-6 text-foreground">Newsletter</h3>
-              <p className="text-muted-foreground mb-6">Recevez nos offres exclusives et nos conseils d'experts</p>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <Input
-                  type="email"
-                  placeholder="Votre email professionnel"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-background border-border text-foreground focus:border-primary"
-                />
-                <Button type="submit" className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-premium hover:shadow-hero transition-all duration-300">
-                  🚀 S'abonner
-                </Button>
-              </form>
-              {showSuccess && (
-                <p className="text-accent text-sm mt-2 animate-fade-in">✅ Inscription réussie !</p>
-              )}
-            </div>
-          </div>
-          
-          <div className="border-t border-border mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-muted-foreground">&copy; 2024 CessionBTP. Tous droits réservés.</p>
-            <div className="flex gap-6 text-muted-foreground">
-              <a href="#" className="hover:text-primary transition-colors story-link">Mentions légales</a>
-              <a href="#" className="hover:text-primary transition-colors story-link">CGU</a>
-              <a href="#" className="hover:text-primary transition-colors story-link">Confidentialité</a>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+    </section>
   );
 };
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Check, Star, Zap, Crown } from "lucide-react";
 
-export default CessionBTP;
+const pricingPlans = [
+  { id: "discovery", name: "Découverte", price: "Gratuit", period: " 30j", description: "Évaluation + 10 vues", icon: Zap, features: ["Évaluation incluse","10 vues d'annonce","Interface BTP"], cta: "Commencer gratuitement", popular: false },
+  { id: "essential", name: "Essentiel", price: "290€", period: " / 3 mois", description: "Annonce simple optimisée", icon: Star, features: ["Annonce optimisée","Contacts qualifiés","Support expert"], cta: "Choisir Essentiel", popular: true },
+  { id: "premium", name: "Premium", price: "490€", period: " / 3 mois", description: "Mise en avant + stats", icon: Crown, features: ["Prioritaire","Statistiques","Accompagnement"], cta: "Choisir Premium", popular: false },
+  { id: "exclusif", name: "Exclusif", price: "990€", period: " / 3 mois", description: "Top position + agent", icon: Crown, features: ["Top position","Agent dédié","Conciergerie"], cta: "Choisir Exclusif", popular: false },
+];
+
+export const Pricing = () => {
+  return (
+    <section className="py-20 bg-pricing-gradient">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <div className="flex justify-center items-center mb-6">
+            <div className="bg-white/10 backdrop-blur-sm rounded-full p-3"><div className="text-4xl">🏗️</div></div>
+          </div>
+          <h2 className="text-4xl font-bold mb-4">Abonnements <span className="text-primary">Vendeurs</span></h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">Choisissez la formule adaptée</p>
+        </div>
+
+        <div className="grid lg:grid-cols-4 gap-6 mb-20">
+          {pricingPlans.map((plan) => {
+            const Icon = plan.icon;
+            const isPopular = plan.popular;
+            return (
+              <div key={plan.id} className="relative group">
+                {isPopular && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                    <Badge className="bg-primary text-white px-4 py-1 rounded-full text-sm font-medium">POPULAIRE</Badge>
+                  </div>
+                )}
+
+                <div className={`h-full rounded-2xl p-8 bg-white shadow-pricing transition-all duration-300 hover:-translate-y-2 ${isPopular ? 'border-2 border-primary scale-105' : 'border border-border hover:border-primary/50'}`}>
+                  <div className="text-center mb-8">
+                    <h3 className="text-2xl font-bold text-foreground mb-2">{plan.name}</h3>
+                    <div className="mb-4">
+                      <span className="text-4xl font-bold text-primary">{plan.price}</span>
+                      {plan.period && <span className="text-muted-foreground text-lg">{plan.period}</span>}
+                    </div>
+                    <p className="text-sm text-muted-foreground">{plan.description}</p>
+                  </div>
+
+                  <ul className="space-y-4 mb-8">
+                    {plan.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start space-x-3">
+                        <Check className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                        <span className="text-sm text-foreground">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Button className={`w-full py-5 text-lg font-bold rounded-2xl shadow-card hover:shadow-premium transition-all ${isPopular ? 'bg-gradient-to-r from-primary to-accent text-primary-foreground' : 'bg-gradient-to-r from-primary to-accent text-primary-foreground'}`}>
+                    {plan.cta}
+                  </Button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+};
+const NotFound = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="text-center">
+      <h1 className="text-4xl font-bold mb-4">404</h1>
+      <p className="text-muted-foreground">Page introuvable</p>
+    </div>
+  </div>
+);
+export default NotFound;

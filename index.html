@@ -1,494 +1,388 @@
-{
-  "name": "cession-btp",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": { "dev": "vite", "build": "tsc && vite build", "preview": "vite preview" },
-  "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.30.1",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.462.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0",
-    "@vitejs/plugin-react": "^4.2.1",
-    "tailwindcss": "^3.4.1",
-    "postcss": "^8.4.35",
-    "autoprefixer": "^10.4.18"
-  }
-}
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from 'node:path'
-
-export default defineConfig({
-  plugins: [react()],
-  resolve: { alias: { '@': path.resolve(__dirname, 'src') } },
-})
-export default {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-};
-import type { Config } from "tailwindcss";
-
-export default {
-  darkMode: ["class"],
-  content: ["./index.html", "./src/**/*.{ts,tsx}"],
-  theme: {
-    extend: {
-      colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        card: "hsl(var(--card))",
-        "card-foreground": "hsl(var(--card-foreground))",
-        primary: "hsl(var(--primary))",
-        "primary-foreground": "hsl(var(--primary-foreground))",
-        secondary: "hsl(var(--secondary))",
-        "secondary-foreground": "hsl(var(--secondary-foreground))",
-        accent: "hsl(var(--accent))",
-        "accent-foreground": "hsl(var(--accent-foreground))",
-        muted: "hsl(var(--muted))",
-        "muted-foreground": "hsl(var(--muted-foreground))",
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        "brand-orange": "hsl(var(--brand-orange))",
-        "brand-warning": "hsl(var(--brand-warning))",
-      },
-      backgroundImage: {
-        "hero-gradient": "var(--hero-gradient)",
-        "card-gradient": "var(--card-gradient)",
-        "pricing-gradient": "var(--pricing-gradient)",
-        "surface-gradient": "var(--surface-gradient)",
-      },
-      boxShadow: {
-        premium: "var(--shadow-premium)",
-        card: "var(--shadow-card)",
-        hero: "var(--shadow-hero)",
-        pricing: "var(--shadow-pricing)",
-      },
-      borderRadius: { lg: "var(--radius)", xl: "calc(var(--radius) + 4px)" },
-      animation: {
-        "fade-in": "fade-in 0.3s ease-out",
-        "scale-in": "scale-in 0.2s ease-out",
-        float: "float 6s ease-in-out infinite",
-        "pulse-glow": "pulse 2s ease-in-out infinite",
-      },
-      keyframes: {
-        "fade-in": { "0%": { opacity: "0", transform: "translateY(10px)" }, "100%": { opacity: "1", transform: "translateY(0)" } },
-        "scale-in": { "0%": { opacity: "0", transform: "scale(0.98)" }, "100%": { opacity: "1", transform: "scale(1)" } },
-        float: { "0%,100%": { transform: "translateY(0)" }, "50%": { transform: "translateY(-8px)" } },
-        pulse: { "0%,100%": { opacity: "1" }, "50%": { opacity: ".6" } },
-      },
-    },
-  },
-  plugins: [],
-} satisfies Config;
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>CessionBTP - Plateforme n°1 de transmission d'entreprises BTP</title>
-    <meta name="description" content="Plateforme n°1 en France de transmission d'entreprises BTP. Repreneurs qualifiés, visibilité sectorielle et accompagnement expert." />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App";
-import "./index.css";
-
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import CessionBTP from "./pages/CessionBTP";
-import NotFound from "./pages/NotFound";
-
-const App = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<CessionBTP />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  </BrowserRouter>
-);
-
-export default App;
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* CessionBTP Design System */
-@layer base {
-  :root {
-    --brand-blue: 221 83% 53%;
-    --brand-purple: 259 84% 61%;
-    --brand-orange: 25 95% 53%;
-    --brand-dark: 221 39% 11%;
-    --brand-warning: 45 100% 51%;
-    --background: 0 0% 100%;
-    --foreground: 221 39% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 221 39% 11%;
-    --primary: 259 84% 61%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 221 39% 11%;
-    --muted: 220 14% 96%;
-    --muted-foreground: 215 13% 65%;
-    --accent: 221 83% 53%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 259 84% 61%;
-    --premium-gradient: linear-gradient(135deg, hsl(259 84% 61%), hsl(221 83% 53%));
-    --hero-gradient: linear-gradient(135deg, hsl(259 84% 61%) 0%, hsl(221 83% 53%) 100%);
-    --surface-gradient: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(220 14% 98%) 100%);
-    --card-gradient: linear-gradient(135deg, hsl(259 84% 61%) 0%, hsl(221 83% 53%) 100%);
-    --pricing-gradient: linear-gradient(135deg, hsl(259 84% 61% / 0.1), hsl(221 83% 53% / 0.1));
-    --shadow-premium: 0 20px 40px -10px hsl(259 84% 61% / 0.15);
-    --shadow-card: 0 4px 6px -1px hsl(221 39% 11% / 0.08);
-    --shadow-hero: 0 25px 50px -12px hsl(259 84% 61% / 0.25);
-    --shadow-pricing: 0 10px 30px -5px hsl(259 84% 61% / 0.1);
-    --radius: 0.75rem;
-  }
-  .dark {
-    --background: 221 39% 11%;
-    --foreground: 0 0% 98%;
-    --card: 221 39% 11%;
-    --card-foreground: 0 0% 98%;
-    --primary: 221 83% 53%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 221 39% 15%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 221 39% 15%;
-    --muted-foreground: 215 13% 65%;
-    --accent: 25 95% 53%;
-    --accent-foreground: 0 0% 100%;
-    --border: 221 39% 15%;
-    --input: 221 39% 15%;
-    --ring: 221 83% 53%;
-  }
-}
-@layer base {
-  * { @apply border-border; }
-  body { @apply bg-background text-foreground; }
-}
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-export function cn(...inputs: ClassValue[]) { return twMerge(clsx(inputs)); }
-import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
-
-const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:opacity-50 disabled:pointer-events-none",
-  {
-    variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        outline: "border border-input bg-background hover:bg-accent/10 hover:text-foreground",
-        ghost: "hover:bg-accent/10",
-        link: "text-primary underline-offset-4 hover:underline",
-      },
-      size: { default: "h-10 px-4 py-2", sm: "h-9 px-3", lg: "h-11 px-8", icon: "h-10 w-10" },
-    },
-    defaultVariants: { variant: "default", size: "default" },
-  }
-);
-
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {}
-
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, ...props }, ref) => (
-    <button ref={ref} className={cn(buttonVariants({ variant, size }), className)} {...props} />
-  )
-);
-Button.displayName = "Button";
-
-export { Button, buttonVariants };
-import * as React from "react";
-import { cn } from "@/lib/utils";
-
-const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
-  ({ className, ...props }, ref) => (
-    <input
-      ref={ref}
-      className={cn(
-        "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-        className
-      )}
-      {...props}
-    />
-  )
-);
-Input.displayName = "Input";
-export { Input };
-import * as React from "react";
-import { cn } from "@/lib/utils";
-
-const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("rounded-xl border bg-card text-card-foreground shadow", className)} {...props} />
-  )
-);
-Card.displayName = "Card";
-
-const CardHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("flex flex-col space-y-1.5 p-6", className)} {...props} />
-);
-const CardTitle = ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-  <h3 className={cn("text-2xl font-semibold leading-none tracking-tight", className)} {...props} />
-);
-const CardDescription = ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
-  <p className={cn("text-sm text-muted-foreground", className)} {...props} />
-);
-const CardContent = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("p-6 pt-0", className)} {...props} />
-);
-
-export { Card, CardHeader, CardTitle, CardDescription, CardContent };
-import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
-
-const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors",
-  {
-    variants: {
-      variant: {
-        default: "border-transparent bg-primary text-primary-foreground hover:bg-primary/90",
-        secondary: "border-transparent bg-secondary text-secondary-foreground",
-        outline: "text-foreground",
-      },
-    },
-    defaultVariants: { variant: "default" },
-  }
-);
-
-export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {}
-
-function Badge({ className, variant, ...props }: BadgeProps) {
-  return <div className={cn(badgeVariants({ variant }), className)} {...props} />;
-}
-export { Badge, badgeVariants };
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { MapPin, Calendar } from "lucide-react";
-
-const listings = [
-  {
-    id: 1,
-    title: "Société d'Isolation Thermique",
-    location: "Lyon, Auvergne-Rhône-Alpes",
-    certification: "CERTIFIÉ RGE",
-    certificationColor: "bg-brand-warning",
-    founded: "2020",
-    ca2023: "€1.2M",
-    employees: "8 salariés",
-    specialty: "ITE & ITI",
-    description:
-      "Entreprise RGE spécialisée en isolation thermique intérieure et extérieure. Installation de pompes à chaleur. Carnet de commandes plein sur 6 mois.",
-    price: "Sur demande",
-    color: "bg-card-gradient",
-  },
-  {
-    id: 2,
-    title: "Entreprise Chauffage & Climatisation",
-    location: "Toulouse, Occitanie",
-    certification: "RGE QUALIPAC",
-    certificationColor: "bg-brand-warning",
-    founded: "2008",
-    ca2023: "€320K",
-    employees: "3 salariés",
-    specialty: "Dette: 0€",
-    description:
-      "16 ans d'existence, entreprise saine sans dette. Spécialisée pompes à chaleur et climatisation réversible. Contrats de maintenance récurrents.",
-    price: "€280 000",
-    color: "bg-card-gradient",
-  },
-  {
-    id: 3,
-    title: "Entreprise Générale du Bâtiment",
-    location: "Nice, PACA",
-    certification: "QUALIBAT",
-    certificationColor: "bg-brand-warning",
-    founded: "2005",
-    ca2023: "€2.8M",
-    employees: "22 salariés",
-    specialty: "Banque Pop.",
-    description:
-      "Entreprise générale tous corps d'état. Marchés publics 60%, privés 40%. Certifications Qualibat 2111 et 4112. Matériel récent, parc 15 véhicules.",
-    price: "€1 850 000",
-    color: "bg-card-gradient",
-  },
-];
-
-export const FeaturedListings = () => {
-  return (
-    <section id="annonces" className="py-20 bg-surface-gradient">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">
-            Dernières <span className="text-primary">Annonces</span> Publiées
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Découvrez les entreprises BTP disponibles à la transmission
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-          {listings.map((listing) => (
-            <div key={listing.id} className="group relative">
-              <div className={`rounded-2xl p-6 text-white ${listing.color} shadow-pricing hover:shadow-premium transition-all duration-300 hover:-translate-y-2`}>
-                <div className="flex justify-between items-start mb-4">
-                  <Badge className={`${listing.certificationColor} text-black font-bold px-3 py-1`}>
-                    {listing.certification}
-                  </Badge>
-                  <div className="flex items-center text-white/80 text-sm">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    Il y a 2h
-                  </div>
-                </div>
-
-                <h3 className="text-xl font-bold mb-3 text-white">{listing.title}</h3>
-
-                <div className="flex items-center mb-6 text-white/90">
-                  <MapPin className="w-4 h-4 mr-2 text-red-400" />
-                  <span className="text-sm">{listing.location}</span>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-                  <div>
-                    <span className="text-white/70">Création</span>
-                    <div className="font-bold text-white">{listing.founded}</div>
-                  </div>
-                  <div>
-                    <span className="text-white/70">CA 2023</span>
-                    <div className="font-bold text-white">{listing.ca2023}</div>
-                  </div>
-                  <div>
-                    <span className="text-white/70">Effectif</span>
-                    <div className="font-bold text-white">{listing.employees}</div>
-                  </div>
-                  <div>
-                    <span className="text-white/70">Spécialité</span>
-                    <div className="font-bold text-white">{listing.specialty}</div>
-                  </div>
-                </div>
-
-                <p className="text-white/90 text-sm mb-6 leading-relaxed">{listing.description}</p>
-
-                <div className="flex justify-between items-center">
-                  <div><span className="text-2xl font-bold text-accent">{listing.price}</span></div>
-                  <Button className="bg-card/20 hover:bg-card/40 text-white border border-white/30 backdrop-blur-sm px-6 py-3 rounded-xl font-bold transition-all duration-300">
-                    Contacter
-                  </Button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="text-center">
-          <Button className="bg-gradient-to-r from-primary to-accent text-primary-foreground px-12 py-5 text-xl font-bold rounded-2xl shadow-premium hover:shadow-hero transition-all">
-            Voir toutes les annonces
-          </Button>
-        </div>
-      </div>
-    </section>
-  );
-};
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Check, Star, Zap, Crown } from "lucide-react";
-
-const pricingPlans = [
-  { id: "discovery", name: "Découverte", price: "Gratuit", period: " 30j", description: "Évaluation + 10 vues", icon: Zap, features: ["Évaluation incluse","10 vues d'annonce","Interface BTP"], cta: "Commencer gratuitement", popular: false },
-  { id: "essential", name: "Essentiel", price: "290€", period: " / 3 mois", description: "Annonce simple optimisée", icon: Star, features: ["Annonce optimisée","Contacts qualifiés","Support expert"], cta: "Choisir Essentiel", popular: true },
-  { id: "premium", name: "Premium", price: "490€", period: " / 3 mois", description: "Mise en avant + stats", icon: Crown, features: ["Prioritaire","Statistiques","Accompagnement"], cta: "Choisir Premium", popular: false },
-  { id: "exclusif", name: "Exclusif", price: "990€", period: " / 3 mois", description: "Top position + agent", icon: Crown, features: ["Top position","Agent dédié","Conciergerie"], cta: "Choisir Exclusif", popular: false },
-];
-
-export const Pricing = () => {
-  return (
-    <section className="py-20 bg-pricing-gradient">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <div className="flex justify-center items-center mb-6">
-            <div className="bg-white/10 backdrop-blur-sm rounded-full p-3"><div className="text-4xl">🏗️</div></div>
-          </div>
-          <h2 className="text-4xl font-bold mb-4">Abonnements <span className="text-primary">Vendeurs</span></h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">Choisissez la formule adaptée</p>
-        </div>
-
-        <div className="grid lg:grid-cols-4 gap-6 mb-20">
-          {pricingPlans.map((plan) => {
-            const Icon = plan.icon;
-            const isPopular = plan.popular;
-            return (
-              <div key={plan.id} className="relative group">
-                {isPopular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-                    <Badge className="bg-primary text-white px-4 py-1 rounded-full text-sm font-medium">POPULAIRE</Badge>
-                  </div>
-                )}
-
-                <div className={`h-full rounded-2xl p-8 bg-white shadow-pricing transition-all duration-300 hover:-translate-y-2 ${isPopular ? 'border-2 border-primary scale-105' : 'border border-border hover:border-primary/50'}`}>
-                  <div className="text-center mb-8">
-                    <h3 className="text-2xl font-bold text-foreground mb-2">{plan.name}</h3>
-                    <div className="mb-4">
-                      <span className="text-4xl font-bold text-primary">{plan.price}</span>
-                      {plan.period && <span className="text-muted-foreground text-lg">{plan.period}</span>}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CessionBTP - 75 000 entreprises BTP à transmettre</title>
+    <meta name="description" content="La première plateforme dédiée à la transmission d'entreprises du bâtiment. Trouvez ou vendez votre entreprise BTP facilement.">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        /* CessionBTP Design System */
+        :root {
+            --brand-blue: 221 83% 53%;
+            --brand-orange: 25 95% 53%;
+            --brand-dark: 221 39% 11%;
+            --background: 0 0% 100%;
+            --foreground: 221 39% 11%;
+            --primary: 221 83% 53%;
+            --primary-foreground: 0 0% 100%;
+            --accent: 25 95% 53%;
+            --accent-foreground: 0 0% 100%;
+            --muted-foreground: 215 13% 65%;
+            --border: 220 13% 91%;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, hsl(221 83% 53%) 0%, hsl(221 83% 45%) 100%);
+        }
+        
+        .surface-gradient {
+            background: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(220 14% 98%) 100%);
+        }
+        
+        .premium-gradient {
+            background: linear-gradient(135deg, hsl(221 83% 53%), hsl(25 95% 53%));
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, hsl(221 83% 53%), hsl(25 95% 53%));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hover-scale {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+        
+        @keyframes fade-in {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fade-in 0.6s ease-out;
+        }
+        
+        .animate-fade-in-delay-1 {
+            animation: fade-in 0.6s ease-out 0.2s both;
+        }
+        
+        .animate-fade-in-delay-2 {
+            animation: fade-in 0.6s ease-out 0.4s both;
+        }
+        
+        .shadow-card {
+            box-shadow: 0 4px 6px -1px hsl(221 39% 11% / 0.08);
+        }
+        
+        .shadow-hero {
+            box-shadow: 0 25px 50px -12px hsl(221 83% 53% / 0.25);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 backdrop-blur-lg shadow-2xl border-b border-white/10" style="background: linear-gradient(to right, rgb(79 70 229), rgb(147 51 234), rgb(79 70 229));">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-center">
+                <div class="flex items-center gap-4 group cursor-pointer hover-scale">
+                    <div class="relative">
+                        <div class="w-14 h-14 rounded-xl flex items-center justify-center text-3xl shadow-lg transition-all duration-300" style="background: linear-gradient(135deg, rgb(251 146 60), rgb(249 115 22));">
+                            🏗️
+                        </div>
+                        <div class="absolute -inset-1 rounded-xl blur-sm opacity-30 transition-opacity duration-300" style="background: linear-gradient(135deg, rgb(251 146 60), rgb(249 115 22));"></div>
                     </div>
-                    <p className="text-sm text-muted-foreground">{plan.description}</p>
-                  </div>
-
-                  <ul className="space-y-4 mb-8">
-                    {plan.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start space-x-3">
-                        <Check className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-                        <span className="text-sm text-foreground">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Button className={`w-full py-5 text-lg font-bold rounded-2xl shadow-card hover:shadow-premium transition-all ${isPopular ? 'bg-gradient-to-r from-primary to-accent text-primary-foreground' : 'bg-gradient-to-r from-primary to-accent text-primary-foreground'}`}>
-                    {plan.cta}
-                  </Button>
+                    <div class="text-left">
+                        <div class="text-3xl font-black tracking-tight">
+                            <span class="text-white drop-shadow-lg">Cession</span>
+                            <span class="text-orange-400 drop-shadow-lg">BTP</span>
+                        </div>
+                        <div class="text-xs tracking-[3px] uppercase text-white/80 font-medium animate-fade-in">
+                            Transmission Pro
+                        </div>
+                    </div>
                 </div>
-              </div>
-            );
-          })}
+            </div>
         </div>
-      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden hero-gradient text-white pt-32 pb-20">
+        <div class="absolute inset-0 opacity-20">
+            <div class="w-full h-full" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+        </div>
+        <div class="max-w-6xl mx-auto px-6 text-center relative">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">
+                75 000 entreprises BTP<br>
+                <span class="text-orange-400">à transmettre</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-10 opacity-90 animate-fade-in-delay-1">
+                La première plateforme dédiée à la transmission d'entreprises du bâtiment
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in-delay-2">
+                <button class="bg-white text-blue-600 hover:bg-gray-100 text-lg px-8 py-4 rounded-full font-semibold hover-scale transition-all duration-300" onclick="scrollToSection('inscription')">
+                    Je vends mon entreprise
+                </button>
+                <button class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-600 text-lg px-8 py-4 rounded-full font-semibold hover-scale transition-all duration-300" onclick="scrollToSection('inscription')">
+                    Je cherche à reprendre
+                </button>
+            </div>
+        </div>
     </section>
-  );
-};
-const NotFound = () => (
-  <div className="min-h-screen flex items-center justify-center">
-    <div className="text-center">
-      <h1 className="text-4xl font-bold mb-4">404</h1>
-      <p className="text-muted-foreground">Page introuvable</p>
-    </div>
-  </div>
-);
-export default NotFound;
+
+    <!-- Stats Section -->
+    <section class="py-20 surface-gradient">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-4 text-gray-900">
+                Un marché colossal ignoré
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+                <div class="text-center hover-scale shadow-card border-0 bg-white rounded-lg p-8">
+                    <div class="text-4xl md:text-5xl font-bold text-gradient mb-3">
+                        560K
+                    </div>
+                    <div class="text-gray-600 text-lg">
+                        Entreprises BTP en France
+                    </div>
+                </div>
+                <div class="text-center hover-scale shadow-card border-0 bg-white rounded-lg p-8">
+                    <div class="text-4xl md:text-5xl font-bold text-gradient mb-3">
+                        €25Mds
+                    </div>
+                    <div class="text-gray-600 text-lg">
+                        Transactions annuelles
+                    </div>
+                </div>
+                <div class="text-center hover-scale shadow-card border-0 bg-white rounded-lg p-8">
+                    <div class="text-4xl md:text-5xl font-bold text-gradient mb-3">
+                        70%
+                    </div>
+                    <div class="text-gray-600 text-lg">
+                        Échec de transmission
+                    </div>
+                </div>
+                <div class="text-center hover-scale shadow-card border-0 bg-white rounded-lg p-8">
+                    <div class="text-4xl md:text-5xl font-bold text-gradient mb-3">
+                        200K
+                    </div>
+                    <div class="text-gray-600 text-lg">
+                        Emplois menacés
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="probleme" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-4 text-gray-900">
+                Le problème actuel
+            </h2>
+            <p class="text-xl text-center text-gray-600 mb-12">
+                Pourquoi 70% des transmissions échouent
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="border-l-4 border-l-yellow-400 bg-yellow-50 hover-scale rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-3 text-yellow-800 flex items-center gap-2">
+                        <span>⏱️</span>
+                        Process trop long
+                    </h3>
+                    <p class="text-yellow-700">18 mois en moyenne pour trouver un repreneur. Les dirigeants abandonnent.</p>
+                </div>
+                <div class="border-l-4 border-l-yellow-400 bg-yellow-50 hover-scale rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-3 text-yellow-800 flex items-center gap-2">
+                        <span>💸</span>
+                        Trop cher
+                    </h3>
+                    <p class="text-yellow-700">Cabinets M&A : 30-50k€ minimum. Inaccessible pour une TPE.</p>
+                </div>
+                <div class="border-l-4 border-l-yellow-400 bg-yellow-50 hover-scale rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-3 text-yellow-800 flex items-center gap-2">
+                        <span>🔍</span>
+                        Pas de visibilité
+                    </h3>
+                    <p class="text-yellow-700">Sites généralistes où le BTP représente 5%. Aucune expertise métier.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="py-20 surface-gradient">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-4 text-gray-900">
+                CessionBTP : la solution
+            </h2>
+            <p class="text-xl text-center text-gray-600 mb-12">
+                100% dédié au bâtiment, 100% efficace
+            </p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="hover-scale shadow-card border-0 relative overflow-hidden bg-white rounded-lg p-8">
+                    <div class="absolute top-0 left-0 right-0 h-1 premium-gradient"></div>
+                    <h3 class="text-2xl font-semibold mb-6 text-blue-600">
+                        Pour les vendeurs
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 font-bold mt-1">✓</span>
+                            <span>Estimation gratuite en ligne</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 font-bold mt-1">✓</span>
+                            <span>Annonce vue par 5000+ repreneurs qualifiés</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 font-bold mt-1">✓</span>
+                            <span>Accompagnement personnalisé</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 font-bold mt-1">✓</span>
+                            <span>Délai moyen : 4 mois</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 font-bold mt-1">✓</span>
+                            <span>Gratuit pour les 1000 premiers</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="hover-scale shadow-card border-0 relative overflow-hidden bg-white rounded-lg p-8">
+                    <div class="absolute top-0 left-0 right-0 h-1 premium-gradient"></div>
+                    <h3 class="text-2xl font-semibold mb-6 text-blue-600">
+                        Pour les repreneurs
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 font-bold mt-1">✓</span>
+                            <span>1000+ entreprises à reprendre</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 font-bold mt-1">✓</span>
+                            <span>Recherche par métier et région</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 font-bold mt-1">✓</span>
+                            <span>Dossiers complets vérifiés</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 font-bold mt-1">✓</span>
+                            <span>Mise en relation directe</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 font-bold mt-1">✓</span>
+                            <span>Aide au financement</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="inscription" class="py-20 hero-gradient text-white">
+        <div class="max-w-2xl mx-auto px-6 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                🚀 Lancement Janvier 2025
+            </h2>
+            <p class="text-xl mb-10 opacity-90">
+                Rejoignez les 1000 premiers inscrits (gratuit à vie)
+            </p>
+            
+            <form id="inscriptionForm" class="space-y-6">
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Votre email professionnel"
+                    class="w-full p-4 text-lg rounded-full border-0 text-gray-900"
+                    required
+                />
+                
+                <div class="flex justify-center gap-8">
+                    <label class="flex items-center gap-3 cursor-pointer text-lg">
+                        <input
+                            type="radio"
+                            name="type"
+                            value="vendeur"
+                            class="w-4 h-4"
+                            required
+                        />
+                        <span>Je vends</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer text-lg">
+                        <input
+                            type="radio"
+                            name="type"
+                            value="acheteur"
+                            class="w-4 h-4"
+                            required
+                        />
+                        <span>J'achète</span>
+                    </label>
+                </div>
+                
+                <button 
+                    type="submit"
+                    class="bg-white text-blue-600 hover:bg-gray-100 text-lg px-10 py-4 rounded-full font-semibold hover-scale transition-all duration-300"
+                >
+                    Être prévenu du lancement
+                </button>
+            </form>
+
+            <div id="successMessage" class="mt-6 p-4 bg-green-500 text-white rounded-lg animate-fade-in hidden">
+                ✅ Inscription confirmée ! Vous serez parmi les premiers informés.
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <p class="mb-6">© 2024 CessionBTP - Tous droits réservés</p>
+            <div class="flex justify-center gap-8">
+                <a href="#" class="hover:text-orange-400 transition-colors">Contact</a>
+                <a href="#" class="hover:text-orange-400 transition-colors">Mentions légales</a>
+                <a href="#" class="hover:text-orange-400 transition-colors">CGV</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll smooth
+        function scrollToSection(id) {
+            document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+        }
+
+        // Form handling
+        document.getElementById('inscriptionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const userType = document.querySelector('input[name="type"]:checked')?.value;
+            
+            if (email && userType) {
+                console.log('Inscription:', email, userType);
+                document.getElementById('successMessage').classList.remove('hidden');
+                document.getElementById('email').value = '';
+                document.querySelectorAll('input[name="type"]').forEach(input => input.checked = false);
+                
+                setTimeout(() => {
+                    document.getElementById('successMessage').classList.add('hidden');
+                }, 5000);
+            }
+        });
+
+        // Smooth scroll for buttons
+        document.querySelectorAll('button[onclick*="scrollToSection"]').forEach(button => {
+            button.addEventListener('click', function() {
+                const match = this.getAttribute('onclick').match(/scrollToSection\('(.+)'\)/);
+                if (match) {
+                    scrollToSection(match[1]);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
